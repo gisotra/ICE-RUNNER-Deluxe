@@ -33,6 +33,12 @@ public class GameCanvas extends Canvas {
 
         /*Desenho tudo na minha tela*/
         try{
+            /*RESPONSIVIDADE*/
+            int canvasW = getWidth();
+            int canvasH = getHeight();
+
+            double scaleX = canvasW / (double) Universal.GAME_HEIGHT;
+
             // Limpa o fundo para evitar artefatos de frames anteriores
             g2d.setColor(new Color(13, 30, 168));
             g2d.fillRect(0, 0, getWidth(), getHeight());
