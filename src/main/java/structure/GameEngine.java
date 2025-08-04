@@ -21,6 +21,9 @@ public class GameEngine implements Runnable{
     /*debug*/
     private int frames = 0;
     private int updates = 0;
+    private int frameCounter = 0;
+    private int updateCounter = 0;
+
 
     /*Construtor*/
     public GameEngine(GameCanvas gc){
@@ -45,12 +48,13 @@ public class GameEngine implements Runnable{
 
             while(accumulator >= fixedStep){
                 update(fixedStep);
-                updates++;
+                updateCounter++;
                 accumulator -= fixedStep;
             }
 
             render();
-            frames++;
+            frameCounter++;
+
 
             /*Controla o tempo de sono*/
             threadSleep = (nextFrame - System.nanoTime()) / 1_000_000.0;
@@ -69,10 +73,15 @@ public class GameEngine implements Runnable{
             nextFrame += (long) frameTime;
 
             //debug de FPS e UPS
-            //gc.writeData(frames, updates);
+
+            gc.writeData(frames, updates);
             if (System.currentTimeMillis() - timer >= 1000) {
-                frames = 0;
-                updates = 0;
+                frames = frameCounter;
+                updates = updateCounter;
+
+                gc.writeData(frames, updates);
+                updateCounter = 0;
+                frameCounter = 0;
                 timer += 1000;
             }
         }
@@ -80,7 +89,7 @@ public class GameEngine implements Runnable{
 
 
     public void update(float dT) {
-        //gc.update(dT);
+        gc.update(dT);
     }
 
 

@@ -1,8 +1,8 @@
-package gameObjects;
+package gameobjects;
 
 import sprites.Sprite;
 
-public abstract class GameObjects {
+public abstract class GameObject {
     /*Classe mãe de todos os elementos do meu jogo*/
 
     /*Coordenadas*/
@@ -12,12 +12,8 @@ public abstract class GameObjects {
     protected int width, height;
 
     /*Controle de pooling*/
-    protected boolean isActive = false;
+    protected boolean active = false;
 
-    /*Sprites*/
-    protected Sprite sprite;
-    protected float anchorX = 0.5f;
-    protected float anchorY = 0.5f;
 
     //-------------------------------------------------------
     /*Métodos abstratos*/
@@ -41,7 +37,7 @@ public abstract class GameObjects {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     /*Setters*/
@@ -62,6 +58,6 @@ public abstract class GameObjects {
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 }
