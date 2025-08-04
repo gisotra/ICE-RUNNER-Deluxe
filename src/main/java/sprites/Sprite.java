@@ -130,6 +130,10 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         return frameCount;
     }
 
+    public int getFrameSpeed() {
+        return frameSpeed;
+    }
+
     /*Setters*/
     public void setFrameHeightSCALED(int frameHeightSCALED) {
         this.frameHeightSCALED = frameHeightSCALED;
@@ -139,6 +143,11 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         this.frameWidthSCALED = frameWidthSCALED;
     }
 
+    public void setFrameCount(int frameCount) {
+        this.frameCount = frameCount;
+    }
 
-
+    public void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 }

@@ -1,5 +1,6 @@
 package sprites;
 
+import system.AnimationType;
 import system.Renderable;
 
 import java.awt.*;
@@ -7,19 +8,26 @@ import java.awt.*;
 public class EffectDisplayer implements Renderable {
 
     private float x, y;
-    private Sprite sprite;
+    private Sprite<? extends AnimationType> sprite;
     private boolean displaying = false;
 
-    public EffectDisplayer(Sprite sprite){
+    public EffectDisplayer(Sprite<? extends AnimationType> sprite){
         this.sprite = sprite;
     }
 
-    public void displayEffect(Sprite sprite, float x, float y){
+    public void displayEffect(Sprite<? extends AnimationType> sprite, float x, float y){
+        this.sprite = sprite;
+        sprite.setCurrentFrame(0); //reinicio a animação
+        updatePosition(x, y);
+        displaying = true;
+    }
+
+    public void update(){
         if(displaying){
-            return;
-        } else {
-            displaying = true;
-            updatePosition(x, y);
+            sprite.update();
+            if(sprite.getCurrentFrame() >= sprite.getFrameSpeed() - 1){
+                    displaying = false;
+            }
         }
     }
 
@@ -27,10 +35,6 @@ public class EffectDisplayer implements Renderable {
     public void render(Graphics2D g2d){
         if(displaying){
             sprite.render(g2d, (int)x, (int)y);
-            if(sprite.getCurrentFrame() > sprite.getFrameCount()){
-                displaying = false;
-                //se ele deu display na animação inteira 1 vez, ele nao dá mais display
-            }
         }
     }
 

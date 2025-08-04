@@ -60,7 +60,7 @@ public class Movement {
                 // ================ movimentação VERTICAL ================
                 if (player.jump && isGrounded()) {
                     player.playerAction = Player.PlayerAnimation.JUMP;
-                    player.getEdLANDING().displayEffect(player.getLandingSprite(), player.getX(), player.getY());
+                    //player.getEdLANDING().displayEffect(player.getLandingSprite(), player.getX(), groundLvl);
                     verticalSpeed = jumpPower;
                     isJumping = true;
                 }

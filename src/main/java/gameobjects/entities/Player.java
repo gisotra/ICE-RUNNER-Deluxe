@@ -44,7 +44,7 @@ public class Player extends GameObject implements Movable, Renderable {
 
     /*Actions*/
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
-    public LandingAnimation smokeAction = LandingAnimation.SMOKE;
+    public LandingAnimation landingAction = LandingAnimation.SMOKE;
 
     //public ChargeAnimation chargeAction = ChargeAnimation.STATIC;
 
@@ -70,7 +70,16 @@ public class Player extends GameObject implements Movable, Renderable {
     @Override
     public void initSprite(){
         this.sprite = new Sprite<>(ImageLoader.getImage("player/player.png"), 32, 32, PlayerAnimation.class, 15);
-        this.landingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_landing.png"), 32, 32, LandingAnimation.class, 12);
+        /*Animação de cair*/
+        this.landingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_landing.png"), 32, 32, LandingAnimation.class, 7);
+        this.edLANDING = new EffectDisplayer(landingSprite);
+        /*Animação de pular*/
+
+        /*Animação de dash*/
+
+        /*Animação de morte*/
+
+
     }
 
     /*Movable*/
@@ -86,9 +95,11 @@ public class Player extends GameObject implements Movable, Renderable {
                 dash = false;
                 lastDash = currentTime;
             }
+            edLANDING.update();
             movement.updateMovement(deltaTime);
             scarf1.update(deltaTime);
             scarf2.update(deltaTime);
+
         }
     }
 
@@ -96,14 +107,19 @@ public class Player extends GameObject implements Movable, Renderable {
     @Override
     public void render(Graphics2D g2d){
         if(active){ /*Filtragem dentro de cada classe*/
+            /*determino as ações a cada frame*/
             sprite.setAction(playerAction);
-            landingSprite.setAction(smokeAction);
+            landingSprite.setAction(landingAction);
+
+            /*atualizo cada animação*/
             sprite.update();
             landingSprite.update();
+
+            /*renderizo*/
             scarf2.render(g2d);
             sprite.render(g2d, (int)getX(), (int)getY());
             scarf1.render(g2d);
-            landingSprite.render(g2d, (int)getX(), (int)getY());
+            edLANDING.render(g2d);
 
         }
     }
