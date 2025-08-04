@@ -95,6 +95,14 @@ public class Player extends GameObject implements Movable, Renderable {
                 dash = false;
                 lastDash = currentTime;
             }
+            if(movement.isJustJumped()){
+                //edLANDING.displayEffect(landingSprite, getX(), movement.getGroundLvl());
+            }
+
+
+            if(movement.isJustLanded()){
+                edLANDING.displayEffect(landingSprite, getX(), movement.getGroundLvl());
+            }
             edLANDING.update();
             movement.updateMovement(deltaTime);
             scarf1.update(deltaTime);

@@ -34,7 +34,15 @@ public class Movement {
     private int horizontalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0
     private int verticalDirection; //vai assumir 3 valores possíveis: -1, 1 ou 0
 
-    /*spritesheet smoke1, smoke2, smoke3*/
+
+    /*flags booleanas de eventos momentâneos (para display de animação)*/
+    private boolean justJumped = false;
+    private boolean justLanded = false;
+    private boolean justDashed = false;
+    private boolean justDied = false;
+    private boolean wasGroundedLastFrame = false;
+    private int lastDashDirection = 0;
+
 
     /*morte*/
     private boolean deathJump = false; //usei isso aqui pra animação de morte
@@ -49,7 +57,7 @@ public class Movement {
     }
 
     public void updateMovement(float deltaTime){
-
+        resetFrameEvents();
         if(!player.dead){
             deathJump = false;
 
@@ -60,9 +68,9 @@ public class Movement {
                 // ================ movimentação VERTICAL ================
                 if (player.jump && isGrounded()) {
                     player.playerAction = Player.PlayerAnimation.JUMP;
-                    //player.getEdLANDING().displayEffect(player.getLandingSprite(), player.getX(), groundLvl);
                     verticalSpeed = jumpPower;
                     isJumping = true;
+                    justJumped = true;
                 }
 
                 if(jumpButtonReleased && verticalSpeed < 0){
@@ -81,6 +89,7 @@ public class Movement {
                     if (player.getY() >= groundLvl) {
                         player.setY(groundLvl);
                         verticalSpeed = 0f;
+                        justLanded = true;
                         isJumping = false;
                         hasDashed = false;
                         canDash = true;
@@ -204,6 +213,13 @@ public class Movement {
                 player.setY(player.getY() + verticalSpeed);
             }
         }
+
+        if (!wasGroundedLastFrame && isGrounded()) {
+            justLanded = true;
+        }
+
+        // Atualiza estado anterior para próximo frame
+        wasGroundedLastFrame = isGrounded();
     }
 
     public void resetMovement() {
@@ -250,11 +266,6 @@ public class Movement {
     }
 
     public void Dash(){
-        //usar para ativar o boolean do dash
-        //usar para pegar as direções
-        //mas onde chamar esse método?
-        //> updateMovement
-        //> update dentro da classe player1
         dashTimeCounter = 0f; // reset
         int direction = getDirection();
         isDashing = true;
@@ -300,6 +311,13 @@ public class Movement {
         }
     }
 
+    public void resetFrameEvents(){
+        justJumped = false;
+        justLanded = false;
+        justDashed = false;
+        justDied = false;
+    }
+
     public boolean isIsJumping() {
         return isJumping;
     }
@@ -330,5 +348,34 @@ public class Movement {
 
     public void setJumpButtonReleased(boolean jumpButtonReleased) {
         this.jumpButtonReleased = jumpButtonReleased;
+    }
+
+    /*Eventos temporários*/
+    public Player getPlayer() {
+        return player;
+    }
+
+    public boolean isJustJumped() {
+        return justJumped;
+    }
+
+    public boolean isJustLanded() {
+        return justLanded;
+    }
+
+    public boolean isJustDashed() {
+        return justDashed;
+    }
+
+    public boolean isJustDied() {
+        return justDied;
+    }
+
+    public boolean isWasGroundedLastFrame() {
+        return wasGroundedLastFrame;
+    }
+
+    public float getGroundLvl() {
+        return groundLvl;
     }
 }
