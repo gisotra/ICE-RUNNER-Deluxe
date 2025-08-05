@@ -134,6 +134,10 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         return frameSpeed;
     }
 
+    public T getCurrentAction() {
+        return currentState;
+    }
+
     /*Setters*/
     public void setFrameHeightSCALED(int frameHeightSCALED) {
         this.frameHeightSCALED = frameHeightSCALED;

@@ -37,6 +37,7 @@ public class Player extends GameObject implements Movable, Renderable {
     /*Sprites*/
     private Sprite<PlayerAnimation> sprite;
     private Sprite<LandingAnimation> landingSprite;
+    private Sprite<JumpingAnimation> jumpingSprite;
     //private Sprite<ShadowAnimation> shadowSprite;
     //private Sprite<MarkAnimation> markSprite;
     //private Sprite<ChargeAnimation> chargeSprite;
@@ -45,6 +46,7 @@ public class Player extends GameObject implements Movable, Renderable {
     /*Actions*/
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
     public LandingAnimation landingAction = LandingAnimation.SMOKE;
+    public JumpingAnimation jumpingAction = JumpingAnimation.JUMPING;
 
     //public ChargeAnimation chargeAction = ChargeAnimation.STATIC;
 
@@ -53,6 +55,7 @@ public class Player extends GameObject implements Movable, Renderable {
 
     /*Displayer de efeitos visuais*/
     private EffectDisplayer edLANDING;
+    private EffectDisplayer edJUMPING;
 
     public Player(int index){
         this.playerIndex = index;
@@ -71,10 +74,11 @@ public class Player extends GameObject implements Movable, Renderable {
     public void initSprite(){
         this.sprite = new Sprite<>(ImageLoader.getImage("player/player.png"), 32, 32, PlayerAnimation.class, 15);
         /*Animação de cair*/
-        this.landingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_landing.png"), 32, 32, LandingAnimation.class, 7);
+        this.landingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_landing.png"), 32, 32, LandingAnimation.class, 9);
         this.edLANDING = new EffectDisplayer(landingSprite);
         /*Animação de pular*/
-
+        this.jumpingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_jumping.png"), 32, 32, JumpingAnimation.class, 5);
+        this.edJUMPING = new EffectDisplayer(jumpingSprite);
         /*Animação de dash*/
 
         /*Animação de morte*/
@@ -96,11 +100,12 @@ public class Player extends GameObject implements Movable, Renderable {
                 lastDash = currentTime;
             }
             if(movement.isJustJumped()){
-                //edLANDING.displayEffect(landingSprite, getX(), movement.getGroundLvl());
+                edJUMPING.displayEffect(jumpingSprite, getX(), movement.getGroundLvl());
             }
-
+            edJUMPING.update();
 
             if(movement.isJustLanded()){
+
                 edLANDING.displayEffect(landingSprite, getX(), movement.getGroundLvl());
             }
             edLANDING.update();
@@ -118,16 +123,20 @@ public class Player extends GameObject implements Movable, Renderable {
             /*determino as ações a cada frame*/
             sprite.setAction(playerAction);
             landingSprite.setAction(landingAction);
+            jumpingSprite.setAction(jumpingAction);
+
 
             /*atualizo cada animação*/
             sprite.update();
             landingSprite.update();
+            jumpingSprite.update();
 
             /*renderizo*/
             scarf2.render(g2d);
             sprite.render(g2d, (int)getX(), (int)getY());
             scarf1.render(g2d);
             edLANDING.render(g2d);
+            edJUMPING.render(g2d);
 
         }
     }
@@ -289,7 +298,8 @@ public class Player extends GameObject implements Movable, Renderable {
         RUNNING(0, 2),
         JUMP(1, 3),
         FALLING(2, 1),
-        DEAD(3, 1);
+        SQUASH(3, 1),
+        DEAD(4, 1);
         //DASH(4, 2);
 
         private final int index;
@@ -313,7 +323,7 @@ public class Player extends GameObject implements Movable, Renderable {
 
     /*Fumaça ao cair*/
     public enum LandingAnimation implements AnimationType{
-        SMOKE(0, 7);
+        SMOKE(0, 6);
 
         private final int index;
         private final int frameCount;
@@ -335,6 +345,29 @@ public class Player extends GameObject implements Movable, Renderable {
 
     }
 
+    /*fumaça ao pular*/
+    public enum JumpingAnimation implements AnimationType{
+        JUMPING(0, 7);
+
+        private final int index;
+        private final int frameCount;
+
+        JumpingAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+
+        @Override
+        public int getIndex(){
+            return index;
+        }
+
+        @Override
+        public int getFrameCount(){
+            return frameCount;
+        }
+    }
+
     /*Getters*/
     public Movement getMovement(){
         return movement;
@@ -350,4 +383,5 @@ public class Player extends GameObject implements Movable, Renderable {
     public Sprite<LandingAnimation> getLandingSprite() {
         return landingSprite;
     }
+    public Sprite<JumpingAnimation> getJumpingSprite(){ return jumpingSprite; }
 }

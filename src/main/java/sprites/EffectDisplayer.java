@@ -25,7 +25,7 @@ public class EffectDisplayer implements Renderable {
     public void update(){
         if(displaying){
             sprite.update();
-            if(sprite.getCurrentFrame() >= sprite.getFrameSpeed() - 1){
+            if(sprite.getCurrentFrame() >= sprite.getCurrentAction().getFrameCount() - 1){
                     displaying = false;
             }
         }

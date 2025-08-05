@@ -27,7 +27,7 @@ public class Movement {
     private boolean canDash = true; //caso dashTimeCounter > 0  && !hasDashed
     private boolean hasDashed = false;
     private float dashSpeed = 1.9f;
-    private float dashDuration = .2f;
+    private float dashDuration = .16f;
     private float dashLength = .001f;
     private float dashTimeCounter = 0f;
     private float dashSpamLimiter = .5f;
@@ -93,7 +93,9 @@ public class Movement {
                         isJumping = false;
                         hasDashed = false;
                         canDash = true;
+
                         player.playerAction = Player.PlayerAnimation.IDLE;
+
                     }
 
                 } else if (!isGrounded()){ //cai de uma plataforma ou qualquer evento alternativo
@@ -151,7 +153,7 @@ public class Movement {
                 hasDashed = true;
                 canDash = false;
                 isDashing = true;
-                float dashVelocity = 260f * Universal.SCALE;
+                float dashVelocity = 500f * Universal.SCALE;
                 float dx = horizontalDirection * dashVelocity * deltaTime;
                 float dy = verticalDirection * dashVelocity * deltaTime;
 

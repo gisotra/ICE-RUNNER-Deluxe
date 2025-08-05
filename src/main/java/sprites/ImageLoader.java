@@ -11,19 +11,21 @@ public class ImageLoader {
     private static final String[] imagePaths = {
             /*Player*/
         "player/player.png",
-        "player/player2.png",
+            "player/player2.png",
             /*Particulas de Poeira*/
         "particles/dust/dustP1.png",
-        "particles/dust/dustP2.png",
-        "particles/dust/dustP3.png",
-        "particles/dust/dustP4.png",
-        "particles/dust/dustP5.png",
-        "particles/dust/dustP6.png",
+            "particles/dust/dustP2.png",
+                "particles/dust/dustP3.png",
+                    "particles/dust/dustP4.png",
+                        "particles/dust/dustP5.png",
+                            "particles/dust/dustP6.png",
             /*Segmentos do cachecol*/
         "player/scarfSegmentP1.png",
-        "player/scarfSegmentP1v2.png",
+            "player/scarfSegmentP1v2.png",
             /*Effects*/
-        "particles/effects/smoke_landing.png"
+        "particles/effects/smoke_landing.png",
+            "particles/effects/smoke_jumping.png"
+
     };
 
     public static void loadAllImages(){
