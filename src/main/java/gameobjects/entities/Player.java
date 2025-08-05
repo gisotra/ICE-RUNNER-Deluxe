@@ -34,20 +34,26 @@ public class Player extends GameObject implements Movable, Renderable {
     public boolean dash = false;
     public boolean jump = false;
 
-    /*Sprites*/
+    /*---------------------- Sprites ----------------------*/
+    /*PLAYER*/
     private Sprite<PlayerAnimation> sprite;
+
+    /*EFEITOS VISUAIS*/
     private Sprite<LandingAnimation> landingSprite;
     private Sprite<JumpingAnimation> jumpingSprite;
+    private Sprite<DashSmokeAnimation> dashSmokeSprite;
+
+    /*ADEREÇOS*/
     //private Sprite<ShadowAnimation> shadowSprite;
     //private Sprite<MarkAnimation> markSprite;
     //private Sprite<ChargeAnimation> chargeSprite;
     //private Sprite<SwordAnimation> swordSprite;
 
-    /*Actions*/
+    /*AÇÕES*/
     public PlayerAnimation playerAction = PlayerAnimation.IDLE;
     public LandingAnimation landingAction = LandingAnimation.SMOKE;
     public JumpingAnimation jumpingAction = JumpingAnimation.JUMPING;
-
+    public DashSmokeAnimation dashSmokeAction = DashSmokeAnimation.DASHRIGHT;
     //public ChargeAnimation chargeAction = ChargeAnimation.STATIC;
 
     /*Cachecol*/
@@ -56,6 +62,7 @@ public class Player extends GameObject implements Movable, Renderable {
     /*Displayer de efeitos visuais*/
     private EffectDisplayer edLANDING;
     private EffectDisplayer edJUMPING;
+    private EffectDisplayer edDASHSMOKE;
 
     public Player(int index){
         this.playerIndex = index;
@@ -79,8 +86,10 @@ public class Player extends GameObject implements Movable, Renderable {
         /*Animação de pular*/
         this.jumpingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_jumping.png"), 32, 32, JumpingAnimation.class, 5);
         this.edJUMPING = new EffectDisplayer(jumpingSprite);
-        /*Animação de dash*/
-
+        /*Animação de fumaça dash*/
+        //substituir por uma spritesheet de fumaça de dash
+        this.dashSmokeSprite = new Sprite<>(ImageLoader.getImage("particles/effects/dash_smoke_right.png"), 32, 32, DashSmokeAnimation.class, 7);
+        this.edDASHSMOKE = new EffectDisplayer(dashSmokeSprite);
         /*Animação de morte*/
 
 
@@ -99,16 +108,51 @@ public class Player extends GameObject implements Movable, Renderable {
                 dash = false;
                 lastDash = currentTime;
             }
+            /*jumping*/
             if(movement.isJustJumped()){
                 edJUMPING.displayEffect(jumpingSprite, getX(), movement.getGroundLvl());
-            }
-            edJUMPING.update();
+            }edJUMPING.update();
 
+            /*landing*/
             if(movement.isJustLanded()){
-
                 edLANDING.displayEffect(landingSprite, getX(), movement.getGroundLvl());
-            }
-            edLANDING.update();
+            }edLANDING.update();
+
+            /*dashing*/
+            if(movement.isJustDashed()){
+                switch(movement.getLastDashDirection()){
+                    case 1:{ // UP
+                        //player.playerAction = Player.PlayerAnimation.DASHUP;
+                    }break;
+                    case 2:{ //DOWN
+                        //player.playerAction = Player.PlayerAnimation.DASHDOWN;
+                    }break;
+                    case 3:{ //RIGHT
+                        edDASHSMOKE.displayEffect(dashSmokeSprite, getX() - getWidth(), getY());
+                    }break;
+                    case 4:{ //LEFT
+                        //player.playerAction = Player.PlayerAnimation.DASHLEFT;
+                    }break;
+                    case 5:{ //UPPER LEFT
+                        //player.playerAction = Player.PlayerAnimation.DASHUPPERLEFT;
+                    }break;
+                    case 6:{ //UPPER RIGHT
+                        //player.playerAction = Player.PlayerAnimation.DASHUPPERRIGHT;
+                    }break;
+                    case 7:{ //LOWER LEFT
+                        //player.playerAction = Player.PlayerAnimation.DASHLOWERLEFT;
+                    }break;
+                    case 8:{ //LOWER RIGHT
+                        //player.playerAction = Player.PlayerAnimation.DASHLOWERRIGHT;
+                    }break;
+                    case 0:{ //DEFAULT PARADO
+                        edDASHSMOKE.displayEffect(dashSmokeSprite, getX() - getWidth(), getY());
+                        break;
+                    }
+                }
+
+            }edDASHSMOKE.update();
+
             movement.updateMovement(deltaTime);
             scarf1.update(deltaTime);
             scarf2.update(deltaTime);
@@ -124,12 +168,13 @@ public class Player extends GameObject implements Movable, Renderable {
             sprite.setAction(playerAction);
             landingSprite.setAction(landingAction);
             jumpingSprite.setAction(jumpingAction);
-
+            dashSmokeSprite.setAction(dashSmokeAction);
 
             /*atualizo cada animação*/
             sprite.update();
             landingSprite.update();
             jumpingSprite.update();
+            dashSmokeSprite.update();
 
             /*renderizo*/
             scarf2.render(g2d);
@@ -137,7 +182,7 @@ public class Player extends GameObject implements Movable, Renderable {
             scarf1.render(g2d);
             edLANDING.render(g2d);
             edJUMPING.render(g2d);
-
+            edDASHSMOKE.render(g2d);
         }
     }
 
@@ -366,6 +411,36 @@ public class Player extends GameObject implements Movable, Renderable {
         public int getFrameCount(){
             return frameCount;
         }
+    }
+
+    public enum DashSmokeAnimation implements AnimationType{
+        DASHRIGHT(0, 7);
+        //DASHLEFT(1, 7),
+        //DASHUP(2, 7)
+        //DASHDOWN(3, 7),
+        //DASHUPPERRIGHT(4, 7),
+        //DASHUPPERLEFT(5, 7),
+        //DASHLOWERRIGHT(6, 7),
+        //DASHLOWERLEFT(7, 7);
+
+        private final int index;
+        private final int frameCount;
+
+        DashSmokeAnimation(int index, int frameCount){
+            this.index = index;
+            this.frameCount = frameCount;
+        }
+
+        @Override
+        public int getIndex(){
+            return index;
+        }
+
+        @Override
+        public int getFrameCount(){
+            return frameCount;
+        }
+
     }
 
     /*Getters*/

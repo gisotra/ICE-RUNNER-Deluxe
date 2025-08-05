@@ -247,20 +247,28 @@ public class Movement {
 
     public int getDirection(){
         if (player.up && player.left) {
+            lastDashDirection = 5;
             return 5;
         } else if (player.up && player.right) {
+            lastDashDirection = 6;
             return 6;
         } else if (player.down && player.left) {
+            lastDashDirection = 7;
             return 7;
         } else if (player.down && player.right) {
+            lastDashDirection = 8;
             return 8;
         } else if (player.up) {
+            lastDashDirection = 1;
             return 1;
         } else if (player.down) {
+            lastDashDirection = 2;
             return 2;
         } else if (player.right) {
+            lastDashDirection = 3;
             return 3;
         } else if (player.left) {
+            lastDashDirection = 4;
             return 4;
         }
         //caso nenhuma direção seja passada
@@ -271,43 +279,53 @@ public class Movement {
         dashTimeCounter = 0f; // reset
         int direction = getDirection();
         isDashing = true;
+        justDashed = true;
 
         switch(direction){
             case 1:{ // UP
                 horizontalDirection = 0;
                 verticalDirection = -1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHUP;
             }break;
             case 2:{ //DOWN
                 horizontalDirection = 0;
                 verticalDirection = 1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHDOWN;
             }break;
             case 3:{ //RIGHT
                 horizontalDirection = 1;
                 verticalDirection = 0;
+                player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
             }break;
             case 4:{ //LEFT
                 horizontalDirection = -1;
                 verticalDirection = 0;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHLEFT;
             }break;
             case 5:{ //UPPER LEFT
                 horizontalDirection = -1;
                 verticalDirection = -1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHUPPERLEFT;
             }break;
             case 6:{ //UPPER RIGHT
                 horizontalDirection = 1;
                 verticalDirection = -1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHUPPERRIGHT;
             }break;
             case 7:{ //LOWER LEFT
                 horizontalDirection = -1;
                 verticalDirection = 1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHLOWERLEFT;
             }break;
             case 8:{ //LOWER RIGHT
                 horizontalDirection = 1;
                 verticalDirection = 1;
+                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHLOWERRIGHT;
             }break;
             case 0:{ //DEFAULT PARADO
                 horizontalDirection = 1;
                 verticalDirection = 0;
+                player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
                 break;
             }
         }
@@ -318,6 +336,7 @@ public class Movement {
         justLanded = false;
         justDashed = false;
         justDied = false;
+        lastDashDirection = 0;
     }
 
     public boolean isIsJumping() {
@@ -350,6 +369,10 @@ public class Movement {
 
     public void setJumpButtonReleased(boolean jumpButtonReleased) {
         this.jumpButtonReleased = jumpButtonReleased;
+    }
+
+    public int getLastDashDirection(){
+        return lastDashDirection;
     }
 
     /*Eventos temporários*/

@@ -24,8 +24,10 @@ public class ImageLoader {
             "player/scarfSegmentP1v2.png",
             /*Effects*/
         "particles/effects/smoke_landing.png",
-            "particles/effects/smoke_jumping.png"
-
+            "particles/effects/smoke_jumping.png",
+                /*dash smoke*/
+                "particles/effects/dash_smoke_left.png",
+                    "particles/effects/dash_smoke_right.png"
     };
 
     public static void loadAllImages(){
@@ -33,7 +35,7 @@ public class ImageLoader {
             try{
                 BufferedImage img = ImageIO.read(ImageLoader.class.getResourceAsStream("/" + path));
                 if (img != null) {
-                    allImages.put(path, img); // <- ESSA LINHA É O QUE FALTAVA!
+                    allImages.put(path, img);
                 } else {
                     System.err.println("Imagem retornou null: " + path);
                 }
