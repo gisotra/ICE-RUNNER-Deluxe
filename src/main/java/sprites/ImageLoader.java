@@ -26,8 +26,7 @@ public class ImageLoader {
         "particles/effects/smoke_landing.png",
             "particles/effects/smoke_jumping.png",
                 /*dash smoke*/
-                "particles/effects/dash_smoke_left.png",
-                    "particles/effects/dash_smoke_right.png"
+                "particles/effects/dash_smoke.png"
     };
 
     public static void loadAllImages(){

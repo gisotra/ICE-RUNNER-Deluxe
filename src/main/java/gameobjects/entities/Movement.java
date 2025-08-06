@@ -42,6 +42,9 @@ public class Movement {
     private boolean justDied = false;
     private boolean wasGroundedLastFrame = false;
     private int lastDashDirection = 0;
+    private boolean isSquashing = false;
+    private float squashTimer = 0f;
+    private float squashDuration = 0.1f;
 
 
     /*morte*/
@@ -83,6 +86,9 @@ public class Movement {
                     player.setY(player.getY() + verticalSpeed); //altero o Y do player
                     if (verticalSpeed > 0) { //estou caindo
                         player.playerAction = Player.PlayerAnimation.FALLING;
+                        if(verticalSpeed > 15f){
+                            player.playerAction = Player.PlayerAnimation.DESPAIR;
+                        }
                     }
 
                     //cheguei no chão, então preciso resetar o pulo
@@ -94,9 +100,12 @@ public class Movement {
                         hasDashed = false;
                         canDash = true;
 
-                        player.playerAction = Player.PlayerAnimation.IDLE;
+                        isSquashing = true;
+                        squashTimer = squashDuration;
+                        player.playerAction = Player.PlayerAnimation.SQUASH;
 
                     }
+
 
                 } else if (!isGrounded()){ //cai de uma plataforma ou qualquer evento alternativo
                     verticalSpeed += gravity;
@@ -198,6 +207,15 @@ public class Movement {
                 }
                 return;
             }
+
+            if(isSquashing){
+                squashTimer -= deltaTime;
+                if(squashTimer <= 0){
+                    isSquashing = false;
+                    player.playerAction = Player.PlayerAnimation.IDLE;
+                }
+            }
+
         } else {
             //player morreu
             //faço ele pular e corto o limitador vertical do chão
@@ -285,23 +303,31 @@ public class Movement {
             case 1:{ // UP
                 horizontalDirection = 0;
                 verticalDirection = -1;
-                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHUP;
+                player.dashSmokeAction = Player.DashSmokeAnimation.DASHUP;
             }break;
             case 2:{ //DOWN
                 horizontalDirection = 0;
                 verticalDirection = 1;
-                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHDOWN;
+                player.dashSmokeAction = Player.DashSmokeAnimation.DASHDOWN;
             }break;
             case 3:{ //RIGHT
                 horizontalDirection = 1;
                 verticalDirection = 0;
-                player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
+                if(isGrounded()){
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHGROUNDRIGHT;
+                } else {
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
+                }
             }break;
             case 4:{ //LEFT
                 horizontalDirection = -1;
                 verticalDirection = 0;
-                //player.dashSmokeAction = Player.DashSmokeAnimation.DASHLEFT;
-            }break;
+                if(isGrounded()){
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHGROUNDLEFT;
+                } else {
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHLEFT;
+                }
+                }break;
             case 5:{ //UPPER LEFT
                 horizontalDirection = -1;
                 verticalDirection = -1;
@@ -325,7 +351,11 @@ public class Movement {
             case 0:{ //DEFAULT PARADO
                 horizontalDirection = 1;
                 verticalDirection = 0;
-                player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
+                if(isGrounded()){
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHGROUNDRIGHT;
+                } else {
+                    player.dashSmokeAction = Player.DashSmokeAnimation.DASHRIGHT;
+                }
                 break;
             }
         }

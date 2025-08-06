@@ -88,7 +88,7 @@ public class Player extends GameObject implements Movable, Renderable {
         this.edJUMPING = new EffectDisplayer(jumpingSprite);
         /*Animação de fumaça dash*/
         //substituir por uma spritesheet de fumaça de dash
-        this.dashSmokeSprite = new Sprite<>(ImageLoader.getImage("particles/effects/dash_smoke_right.png"), 32, 32, DashSmokeAnimation.class, 7);
+        this.dashSmokeSprite = new Sprite<>(ImageLoader.getImage("particles/effects/dash_smoke.png"), 32, 32, DashSmokeAnimation.class, 7);
         this.edDASHSMOKE = new EffectDisplayer(dashSmokeSprite);
         /*Animação de morte*/
 
@@ -122,16 +122,16 @@ public class Player extends GameObject implements Movable, Renderable {
             if(movement.isJustDashed()){
                 switch(movement.getLastDashDirection()){
                     case 1:{ // UP
-                        //player.playerAction = Player.PlayerAnimation.DASHUP;
+                        edDASHSMOKE.displayEffect(dashSmokeSprite, getX(), getY() + getHeight());
                     }break;
                     case 2:{ //DOWN
-                        //player.playerAction = Player.PlayerAnimation.DASHDOWN;
+                        edDASHSMOKE.displayEffect(dashSmokeSprite, getX(), getY() - getHeight());
                     }break;
                     case 3:{ //RIGHT
                         edDASHSMOKE.displayEffect(dashSmokeSprite, getX() - getWidth(), getY());
                     }break;
                     case 4:{ //LEFT
-                        //player.playerAction = Player.PlayerAnimation.DASHLEFT;
+                        edDASHSMOKE.displayEffect(dashSmokeSprite, getX() + getWidth(), getY());
                     }break;
                     case 5:{ //UPPER LEFT
                         //player.playerAction = Player.PlayerAnimation.DASHUPPERLEFT;
@@ -344,7 +344,8 @@ public class Player extends GameObject implements Movable, Renderable {
         JUMP(1, 3),
         FALLING(2, 1),
         SQUASH(3, 1),
-        DEAD(4, 1);
+        DESPAIR(4, 2),
+        DEAD(5, 1);
         //DASH(4, 2);
 
         private final int index;
@@ -414,14 +415,16 @@ public class Player extends GameObject implements Movable, Renderable {
     }
 
     public enum DashSmokeAnimation implements AnimationType{
-        DASHRIGHT(0, 7);
-        //DASHLEFT(1, 7),
-        //DASHUP(2, 7)
-        //DASHDOWN(3, 7),
-        //DASHUPPERRIGHT(4, 7),
-        //DASHUPPERLEFT(5, 7),
-        //DASHLOWERRIGHT(6, 7),
-        //DASHLOWERLEFT(7, 7);
+        DASHRIGHT(0, 7),
+        DASHLEFT(1, 7),
+        DASHUP(2, 7),
+        DASHDOWN(3, 7),
+        DASHGROUNDRIGHT(4, 7),
+        DASHGROUNDLEFT(5, 7);
+        //DASHUPPERRIGHT(6, 7),
+        //DASHUPPERLEFT(7, 7),
+        //DASHLOWERRIGHT(8, 7),
+        //DASHLOWERLEFT(9, 7);
 
         private final int index;
         private final int frameCount;
