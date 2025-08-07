@@ -22,11 +22,13 @@ public class ImageLoader {
             /*Segmentos do cachecol*/
         "player/scarfSegmentP1.png",
             "player/scarfSegmentP1v2.png",
+                "player/scarfSegmentP2.png",
+                    "player/scarfSegmentP2v2.png",
             /*Effects*/
         "particles/effects/smoke_landing.png",
             "particles/effects/smoke_jumping.png",
                 /*dash smoke*/
-                "particles/effects/dash_smoke.png"
+        "particles/effects/dash_smoke.png"
     };
 
     public static void loadAllImages(){

@@ -71,15 +71,21 @@ public class Player extends GameObject implements Movable, Renderable {
         initSprite();
         setX(400);
         setY(400);
-        scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP1.png"), -5, 3, 3, 9);
-        scarf2 = new ScarfRope(this, 0.8f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP1v2.png"), -18, 1, 2f, 12);
         setActive(true);
     }
 
     /*GameObjects*/
     @Override
     public void initSprite(){
-        this.sprite = new Sprite<>(ImageLoader.getImage("player/player.png"), 32, 32, PlayerAnimation.class, 15);
+        if(this.playerIndex == 1){
+            this.sprite = new Sprite<>(ImageLoader.getImage("player/player.png"), 32, 32, PlayerAnimation.class, 15);
+            scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP1.png"), -5, 3, 3, 9);
+            scarf2 = new ScarfRope(this, 0.8f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP1v2.png"), -18, 1, 2f, 12);
+        } else {
+            this.sprite = new Sprite<>(ImageLoader.getImage("player/player2.png"), 32, 32, PlayerAnimation.class, 15);
+            scarf1 = new ScarfRope(this, 1.2f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP2.png"), -5, 3, 3, 9);
+            scarf2 = new ScarfRope(this, 0.8f * Universal.SCALE, ImageLoader.getImage("player/scarfSegmentP2v2.png"), -18, 1, 2f, 12);
+        }
         /*Animação de cair*/
         this.landingSprite = new Sprite<>(ImageLoader.getImage("particles/effects/smoke_landing.png"), 32, 32, LandingAnimation.class, 9);
         this.edLANDING = new EffectDisplayer(landingSprite);
@@ -91,6 +97,7 @@ public class Player extends GameObject implements Movable, Renderable {
         this.dashSmokeSprite = new Sprite<>(ImageLoader.getImage("particles/effects/dash_smoke.png"), 32, 32, DashSmokeAnimation.class, 7);
         this.edDASHSMOKE = new EffectDisplayer(dashSmokeSprite);
         /*Animação de morte*/
+
 
 
     }

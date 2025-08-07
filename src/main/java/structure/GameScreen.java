@@ -29,7 +29,7 @@ public class GameScreen {
     }
 
     public void initList(){
-        player1 = new Player(1);
+        player1 = new Player(2);
         ObjectsOnScreen.add(player1);
     }
 
