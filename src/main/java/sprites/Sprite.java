@@ -17,6 +17,7 @@ public class Sprite<T extends Enum<T> & AnimationType> {
     private float anchorX = 0.5f;
     private float anchorY = 0.5f;
 
+    /*construtor padrão*/
     public Sprite(BufferedImage sprite, int alturaFrame, int larguraFrame, Class<T> enumClass, int frameSpeed){
         this.frameHeight = alturaFrame;
         this.frameWidth = larguraFrame;
@@ -24,6 +25,48 @@ public class Sprite<T extends Enum<T> & AnimationType> {
 
         frameHeightSCALED = alturaFrame * (int) Universal.SCALE;
         frameWidthSCALED = larguraFrame * (int)Universal.SCALE;
+
+        T[] actions = enumClass.getEnumConstants();
+        spriteSCALED = new BufferedImage[actions.length][];
+
+        /*preencher a minha malha*/
+        for(T action : actions){
+            int row = action.getIndex();
+            int frameCount = action.getFrameCount();
+            spriteSCALED[row] = new BufferedImage[frameCount];
+
+            for(int i = 0; i < frameCount; i++){
+                /*Recorto o frame original*/
+                BufferedImage frame = sprite.getSubimage(
+                        i * larguraFrame,
+                        row * alturaFrame,
+                        larguraFrame,
+                        alturaFrame
+                );
+
+                /*agora eu vou ESCALONAR esse frame*/
+                BufferedImage frameEscalonado = new BufferedImage(frameWidthSCALED, frameHeightSCALED, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D g2d = frameEscalonado.createGraphics();
+                g2d.drawImage(frame, 0, 0, frameWidthSCALED, frameHeightSCALED, null);
+                g2d.dispose();
+
+                spriteSCALED[row][i] = frameEscalonado;
+            }
+        }
+        // Inicializa com a primeira ação por padrão
+        currentState = actions[0];
+        currentFrame = 0;
+        frameCount = 0;
+    }
+
+    /*sobrecarga do construtor com escala específica*/
+    public Sprite(BufferedImage sprite, int alturaFrame, int larguraFrame, Class<T> enumClass, int frameSpeed, int scale){
+        this.frameHeight = alturaFrame;
+        this.frameWidth = larguraFrame;
+        this.frameSpeed = frameSpeed;
+
+        frameHeightSCALED = alturaFrame * scale;
+        frameWidthSCALED = larguraFrame * scale;
 
         T[] actions = enumClass.getEnumConstants();
         spriteSCALED = new BufferedImage[actions.length][];
@@ -93,6 +136,22 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         if(Universal.showGrid){
             renderAnchor(g2d, x, y);
         }
+    }
+
+    //sobrecarga com rotação
+    public void render(Graphics2D g2d, int x, int y, float rotation) {
+        int renderX = (int) (x - frameWidthSCALED * anchorX);
+        int renderY = (int) (y - frameHeightSCALED * anchorY);
+
+        int centerX = renderX + frameWidthSCALED / 2;
+        int centerY = renderY + frameHeightSCALED / 2;
+
+        g2d.translate(centerX, centerY);
+        g2d.rotate(rotation);
+        g2d.drawImage(spriteSCALED[currentState.getIndex()][currentFrame],
+                -frameWidthSCALED / 2, -frameHeightSCALED / 2, null);
+        g2d.rotate(-rotation);
+        g2d.translate(-centerX, -centerY);
     }
 
     /*Renderizar o tamanho da sprite para debug*/

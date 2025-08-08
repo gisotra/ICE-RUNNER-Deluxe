@@ -3,6 +3,7 @@ package structure;
 import gameloop.WorldTheme;
 import gameobjects.GameObject;
 import gameobjects.entities.Player;
+import gameobjects.environment.emitters.SnowEmitter;
 import gameobjects.obstacles.Obstacle;
 import gamestates.StateMachine;
 import global.Universal;
@@ -24,6 +25,7 @@ public class GameScreen {
     /*Player*/
     private Player player1;
     private Player player2;
+    private SnowEmitter snowEmitter;
 
     /*Bioma*/
     public GameScreen(GameCanvas gc){
@@ -40,6 +42,7 @@ public class GameScreen {
                     if(obj instanceof Movable)
                         ((Movable)obj).update(deltaTime);
                 }
+                snowEmitter.update(deltaTime);
             }break;
         }
     }
@@ -53,6 +56,7 @@ public class GameScreen {
                         ((Renderable)obj).render(g2d);
                     }
                 }
+                snowEmitter.render(g2d);
             }break;
         }
     }
@@ -63,7 +67,8 @@ public class GameScreen {
         player1 = new Player(1);
         ObjectsOnScreen.add(player1);
         player2 = new Player(2);
-        ObjectsOnScreen.add(player2);
+        //ObjectsOnScreen.add(player2);
+        snowEmitter = new SnowEmitter(70);
     }
 
     /*Desativar todo o conteúdo do arraylist (Para quando o player trocar de state, por exemplo)*/

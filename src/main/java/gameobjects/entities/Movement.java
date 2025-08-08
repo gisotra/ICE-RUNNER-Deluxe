@@ -21,6 +21,7 @@ public class Movement {
     private float heightGY; //usado para achar a posição Y em que o player tá "no chão"
     private float groundLvl;
     private boolean jumpButtonReleased = false;
+    private boolean afraid = false;
 
     /*dash*/
     private boolean isDashing = false;
@@ -84,10 +85,12 @@ public class Movement {
                 if (isJumping) { //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
                     verticalSpeed += gravity;
                     player.setY(player.getY() + verticalSpeed); //altero o Y do player
+                    System.out.println(player.getY());
                     if (verticalSpeed > 0) { //estou caindo
                         player.playerAction = Player.PlayerAnimation.FALLING;
-                        if(verticalSpeed > 15f){
-                            player.playerAction = Player.PlayerAnimation.DESPAIR;
+                        if(player.getY() < 70){
+                            afraid = true;
+                            //player.playerAction = Player.PlayerAnimation.DESPAIR;
                         }
                     }
 
@@ -99,6 +102,7 @@ public class Movement {
                         isJumping = false;
                         hasDashed = false;
                         canDash = true;
+                        afraid = false;
 
                         isSquashing = true;
                         squashTimer = squashDuration;
@@ -176,6 +180,7 @@ public class Movement {
                     isJumping = false;
                     hasDashed = false;
                     canDash = true;
+                    afraid = false;
                     player.playerAction = Player.PlayerAnimation.IDLE;
                 }
 
@@ -214,6 +219,10 @@ public class Movement {
                     isSquashing = false;
                     player.playerAction = Player.PlayerAnimation.IDLE;
                 }
+            }
+
+            if(afraid){
+                player.playerAction = Player.PlayerAnimation.DESPAIR;
             }
 
         } else {
