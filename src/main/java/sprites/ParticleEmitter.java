@@ -35,6 +35,11 @@ public class ParticleEmitter extends GameObject {
 
     }
 
+    @Override
+    public void reposition(){
+
+    }
+
 
     public void update(float deltaTime){
         if(emitting){

@@ -69,9 +69,8 @@ public class Player extends GameObject implements Movable, Renderable {
         movement = new Movement(this);
         movement.setIsJumping(true);
         initSprite();
-        setX(400);
-        setY(400);
         setActive(true);
+        reposition();
     }
 
     /*GameObjects*/
@@ -100,6 +99,12 @@ public class Player extends GameObject implements Movable, Renderable {
 
 
 
+    }
+
+    @Override
+    public void reposition(){
+        setX(this.playerIndex * 200);
+        setY(350);
     }
 
     /*Movable*/

@@ -15,4 +15,7 @@ public class Universal {
 
     /*debug visual*/
     public static boolean showGrid = false;
+
+    /*vai ter 2 players*/
+    public static boolean bothPlaying = false;
 }

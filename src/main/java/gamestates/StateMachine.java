@@ -11,5 +11,5 @@ public enum StateMachine {
     LOCAL_MULTIPLAYER,
     END;
 
-    public static StateMachine gamesstate = LOADING;
+    public static StateMachine gamesstate = PLAYING;
 }

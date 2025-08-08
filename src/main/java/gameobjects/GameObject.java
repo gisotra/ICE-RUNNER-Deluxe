@@ -18,6 +18,7 @@ public abstract class GameObject {
     //-------------------------------------------------------
     /*Métodos abstratos*/
     public abstract void initSprite();
+    public abstract void reposition();
 
     /*Getters*/
     public float getX() {

@@ -1,7 +1,11 @@
 package structure;
 
+import gameloop.WorldTheme;
 import gameobjects.GameObject;
 import gameobjects.entities.Player;
+import gameobjects.obstacles.Obstacle;
+import gamestates.StateMachine;
+import global.Universal;
 import system.Movable;
 import system.Renderable;
 
@@ -19,33 +23,83 @@ public class GameScreen {
     /*Componentes do arraylist*/
     /*Player*/
     private Player player1;
-    //private Player player2;
+    private Player player2;
 
     /*Bioma*/
-
     public GameScreen(GameCanvas gc){
         this.gc = gc;
-        initList();
+        initList(); /*Adiciono tudo*/
     }
 
-    public void initList(){
-        player1 = new Player(2);
-        ObjectsOnScreen.add(player1);
-    }
 
+    /*update*/
     public void update(float deltaTime){
-        for(GameObject obj : ObjectsOnScreen){
-            if(obj instanceof Movable)
-                ((Movable)obj).update(deltaTime);
+        switch (StateMachine.gamesstate){
+            case PLAYING:{
+                for(GameObject obj : ObjectsOnScreen){
+                    if(obj instanceof Movable)
+                        ((Movable)obj).update(deltaTime);
+                }
+            }break;
         }
     }
 
+    /*render*/
     public void render(Graphics2D g2d){
-        for(GameObject obj : ObjectsOnScreen){
-            if(obj instanceof Renderable){
-                ((Renderable)obj).render(g2d);
+        switch (StateMachine.gamesstate){
+            case PLAYING:{
+                for(GameObject obj : ObjectsOnScreen){
+                    if(obj instanceof Renderable){
+                        ((Renderable)obj).render(g2d);
+                    }
+                }
+            }break;
+        }
+    }
+
+    /*----------------------------- PRINCIPAIS MÉTODOS DE CONTROLE DO ARRAYLIST -----------------------------*/
+    /*Iniciar o arraylist (no construtor)*/
+    public void initList(){
+        player1 = new Player(1);
+        ObjectsOnScreen.add(player1);
+        player2 = new Player(2);
+        ObjectsOnScreen.add(player2);
+    }
+
+    /*Desativar todo o conteúdo do arraylist (Para quando o player trocar de state, por exemplo)*/
+    public void deactivateAll(){
+        for(GameObject object : ObjectsOnScreen){
+            object.setActive(false);
+        }
+    }
+
+    /*vai receber os valores de cada fase, e filtrar de acordo*/
+    public void startGame(WorldTheme theme, int levelIndex){
+        for(GameObject object : ObjectsOnScreen){
+            /*filtrar os obstáculos*/
+            if(object instanceof Obstacle){
+                if(((Obstacle) object).getTheme() == theme){
+                    //object.reposition();
+                    //spawner.allowObstacle(object)
+                }
             }
         }
-    }
 
+        switch (theme){
+            case SNOW:{
+                //snowEmmiter.startEmmiting();
+            }break;
+            case DESERT:{
+                //sandEmmiter.startEmmiting();
+            }break;
+            case VOLCANO:{
+                //ashEmmiter.startEmmiting();
+            }break;
+        }
+
+        player1.setActive(true);
+        if(Universal.bothPlaying){
+            player2.setActive(true);
+        }
+    }
 }

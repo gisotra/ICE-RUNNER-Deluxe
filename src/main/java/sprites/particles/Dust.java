@@ -57,4 +57,9 @@ public class Dust extends GameObject implements Movable, Renderable {
             return 1;
         }
     }
+
+    @Override
+    public void reposition(){
+        //
+    }
 }
