@@ -1,6 +1,7 @@
 package structure;
 
 import global.Universal;
+import sprites.ImageLoader;
 
 import javax.swing.*;
 
@@ -9,11 +10,13 @@ public class GameWindow extends JFrame {
 
     public GameWindow(){
         gc = new GameCanvas();
-        setUndecorated(true);
+        setUndecorated(false);
         setLayout(null);
+        setTitle("Chicken Jumper made in Caraguatatuba");
+        setIconImage(ImageLoader.getImage("window/icon.png"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
-        setResizable(true);
+        setResizable(false);
         gc.setBounds(0, 0, Universal.GAME_WIDTH, Universal.GAME_HEIGHT);
 
         add(gc);

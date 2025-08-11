@@ -37,7 +37,4 @@ public class WorldMap {
 
     O inteiro vai ser usado para calcular a speed base dos obstaculos daquela fase
     */
-
-
-
 }

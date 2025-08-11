@@ -57,7 +57,7 @@ public class Movement {
         this.player = player1;
         //heightGY = player1.getHitboxHeight();
         //groundLvl = Universal.groundY - heightGY + 40; // 5 Tiles - 1 = 4 tiles
-        groundLvl = Universal.TILES_SIZE * 5 - 48;
+        groundLvl = Universal.TILES_SIZE * 6.5f;
     }
 
     public void updateMovement(float deltaTime){
@@ -88,7 +88,7 @@ public class Movement {
                     System.out.println(player.getY());
                     if (verticalSpeed > 0) { //estou caindo
                         player.playerAction = Player.PlayerAnimation.FALLING;
-                        if(player.getY() < 70){
+                        if(player.getY() < 3 * Universal.TILES_SIZE){
                             afraid = true;
                             //player.playerAction = Player.PlayerAnimation.DESPAIR;
                         }

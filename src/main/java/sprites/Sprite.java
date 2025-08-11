@@ -138,6 +138,8 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         }
     }
 
+
+
     //sobrecarga com rotação
     public void render(Graphics2D g2d, int x, int y, float rotation) {
         int renderX = (int) (x - frameWidthSCALED * anchorX);
@@ -150,8 +152,12 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         g2d.rotate(rotation);
         g2d.drawImage(spriteSCALED[currentState.getIndex()][currentFrame],
                 -frameWidthSCALED / 2, -frameHeightSCALED / 2, null);
+
         g2d.rotate(-rotation);
         g2d.translate(-centerX, -centerY);
+        if(Universal.showGrid){
+            renderAnchor(g2d, x, y, rotation);
+        }
     }
 
     /*Renderizar o tamanho da sprite para debug*/
@@ -166,6 +172,34 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         int anchorCenterX = x - anchorDiameter / 2;
         int anchorCenterY = y - anchorDiameter / 2;
         g2d.fillOval(anchorCenterX, anchorCenterY, anchorDiameter, anchorDiameter);
+    }
+
+    /*Renderizar o tamanho da sprite para debug*/
+    public void renderAnchor(Graphics2D g2d, int x, int y, float rotation) {
+        int renderX = (int) (x - frameWidthSCALED * anchorX);
+        int renderY = (int) (y - frameHeightSCALED * anchorY);
+
+        int centerX = renderX + frameWidthSCALED / 2;
+        int centerY = renderY + frameHeightSCALED / 2;
+
+        // aplica rotação
+        g2d.translate(centerX, centerY);
+        g2d.rotate(rotation);
+
+        // desenha o retângulo do tamanho do sprite (centrado)
+        g2d.setColor(Color.WHITE);
+        g2d.drawRect(-frameWidthSCALED / 2, -frameHeightSCALED / 2,
+                frameWidthSCALED, frameHeightSCALED);
+
+        // desenha o ponto de ancoragem (sempre no centro)
+        g2d.setColor(new Color(0x2DFFD7));
+        int anchorDiameter = 10;
+        g2d.fillOval(-anchorDiameter / 2, -anchorDiameter / 2,
+                anchorDiameter, anchorDiameter);
+
+        // desfaz transformações
+        g2d.rotate(-rotation);
+        g2d.translate(-centerX, -centerY);
     }
 
     /*Getters*/

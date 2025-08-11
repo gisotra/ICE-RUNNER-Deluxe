@@ -96,7 +96,7 @@ public class GameCanvas extends Canvas {
         g2d.setColor(Color.BLACK);
         for (int x = 0; x < Universal.GAME_WIDTH; x += Universal.TILES_SIZE) {
             for (int y = 0; y < Universal.GAME_HEIGHT; y += Universal.TILES_SIZE) {
-                if(y >= 5*Universal.TILES_SIZE){
+                if(y >= 6.5f*Universal.TILES_SIZE){
                     g2d.fillRect(x, y, Universal.TILES_SIZE, Universal.TILES_SIZE);
                 }
             }

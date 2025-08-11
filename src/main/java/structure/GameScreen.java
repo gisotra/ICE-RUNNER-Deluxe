@@ -67,7 +67,7 @@ public class GameScreen {
         player1 = new Player(1);
         ObjectsOnScreen.add(player1);
         player2 = new Player(2);
-        //ObjectsOnScreen.add(player2);
+        ObjectsOnScreen.add(player2);
         snowEmitter = new SnowEmitter(70);
     }
 

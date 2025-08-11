@@ -9,6 +9,8 @@ public class ImageLoader {
     public static final HashMap<String, BufferedImage> allImages = new HashMap<>();
 
     private static final String[] imagePaths = {
+            /*Icon*/
+        "window/icon.png",
             /*Player*/
         "player/player.png",
             "player/player2.png",
