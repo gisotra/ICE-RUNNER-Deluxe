@@ -18,4 +18,10 @@ public class Universal {
 
     /*vai ter 2 players*/
     public static boolean bothPlaying = false;
+
+    /*Valor de velocidade base do jogo, que será aumentada conforme o jogo avança*/
+    public static float BASESPEED = 0;
+
+
 }
+

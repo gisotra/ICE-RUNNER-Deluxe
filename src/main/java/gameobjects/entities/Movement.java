@@ -85,7 +85,7 @@ public class Movement {
                 if (isJumping) { //caso eu esteja pulando, eu continuamente somo a gravidade na airSpeed
                     verticalSpeed += gravity;
                     player.setY(player.getY() + verticalSpeed); //altero o Y do player
-                    System.out.println(player.getY());
+
                     if (verticalSpeed > 0) { //estou caindo
                         player.playerAction = Player.PlayerAnimation.FALLING;
                         if(player.getY() < 3 * Universal.TILES_SIZE){
