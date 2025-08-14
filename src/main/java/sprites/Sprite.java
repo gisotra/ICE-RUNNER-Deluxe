@@ -167,7 +167,7 @@ public class Sprite<T extends Enum<T> & AnimationType> {
         int renderY = (int)(y - frameHeightSCALED * anchorY);
         g2d.drawRect(renderX, renderY, frameWidthSCALED, frameHeightSCALED);
 
-        g2d.setColor(new Color(0x2DFFD7));
+        g2d.setColor(new Color(0xFF0E58));
         int anchorDiameter = 10;
         int anchorCenterX = x - anchorDiameter / 2;
         int anchorCenterY = y - anchorDiameter / 2;
@@ -192,7 +192,7 @@ public class Sprite<T extends Enum<T> & AnimationType> {
                 frameWidthSCALED, frameHeightSCALED);
 
         // desenha o ponto de ancoragem (sempre no centro)
-        g2d.setColor(new Color(0x2DFFD7));
+        g2d.setColor(new Color(0xFF0E58));
         int anchorDiameter = 10;
         g2d.fillOval(-anchorDiameter / 2, -anchorDiameter / 2,
                 anchorDiameter, anchorDiameter);

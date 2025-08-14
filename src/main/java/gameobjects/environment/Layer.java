@@ -9,7 +9,15 @@ public class Layer extends GameObject {
     private Sprite<? extends AnimationType> sprite;
     private float layerspeed;
 
-    public Layer(){
+    /*-------------construtores em sobrecarga-------------*/
+
+    /*Não animado*/
+    public Layer(int width, int height, float layerspeed){
+
+    }
+
+    /*Animado*/
+    public Layer(int width, int height, float layerspeed, Sprite<? extends AnimationType> sprite){
 
     }
 
