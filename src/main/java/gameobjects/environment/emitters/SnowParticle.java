@@ -17,13 +17,12 @@ import java.util.Random;
 
 public class SnowParticle extends GameObject implements Movable, Renderable {
     private Random r = new Random();
-    private float x;
-    private float y;
     private float verticalSpeed;
     private float horizontalSpeed;
     private Sprite<SnowAnimation> snowSprite;
-    private int altura = 7;
-    private int largura = 7;
+    private float spawnPointX;
+    private float spawnPointY;
+
     private float rotation = 0;
     private float rotationSpeed;
 
@@ -32,15 +31,16 @@ public class SnowParticle extends GameObject implements Movable, Renderable {
         this.y = r.nextFloat() * (-150f) - 70f;
         this.horizontalSpeed = -190f;
         this.verticalSpeed = r.nextFloat() * 190.0f + 165f;
-
-        // Define uma velocidade de rotação alta, entre 3 e 10 rad/s (pode ajustar)
         float minRotationSpeed = 3f;
         float maxRotationSpeed = 10f;
         float randomSpeed = minRotationSpeed + r.nextFloat() * (maxRotationSpeed - minRotationSpeed);
         float direction = r.nextBoolean() ? 1f : -1f;
 
+
         this.rotationSpeed = randomSpeed * direction;
         initSprite();
+        spawnPointX = x;
+        spawnPointY = y;
     }
 
     @Override
@@ -73,7 +73,8 @@ public class SnowParticle extends GameObject implements Movable, Renderable {
 
     @Override
     public void reposition(){
-
+        setX(spawnPointX);
+        setY(spawnPointY);
     }
 
     /*--------------- Getters e Setters ---------------*/
@@ -102,6 +103,14 @@ public class SnowParticle extends GameObject implements Movable, Renderable {
         this.verticalSpeed = speed;
     }
 
+    public float getSpawnPointY() {
+        return spawnPointY;
+    }
+
+    public float getSpawnPointX() {
+        return spawnPointX;
+    }
+
     public Random getR() {
         return r;
     }
@@ -123,5 +132,7 @@ public class SnowParticle extends GameObject implements Movable, Renderable {
             return 1;
         }
     }
+
+
 
 }

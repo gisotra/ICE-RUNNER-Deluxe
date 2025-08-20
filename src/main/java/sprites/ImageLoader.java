@@ -11,6 +11,8 @@ public class ImageLoader {
     private static final String[] imagePaths = {
             /*Icon*/
         "window/icon.png",
+            /*Mouse*/
+        "ui/cursor.png",
             /*Player*/
         "player/player.png",
             "player/player2.png",
@@ -37,10 +39,14 @@ public class ImageLoader {
             "particles/snow/snowP2.png",
                 "particles/snow/snowP3.png",
                     "particles/snow/snowP4.png",
-                        "particles/snow/snowP5.png"
+                        "particles/snow/snowP5.png",
                 /*sand*/
-
+        "particles/sand/sand1.png",
+            "particles/sand/sand2.png",
+                "particles/sand/sand3.png",
+                    "particles/sand/sand4.png",
                 /*ash*/
+        "particles/ashes/ash1.png"
     };
 
     public static void loadAllImages(){

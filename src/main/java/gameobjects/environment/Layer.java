@@ -3,8 +3,12 @@ package gameobjects.environment;
 import gameobjects.GameObject;
 import sprites.Sprite;
 import system.AnimationType;
+import system.Movable;
+import system.Renderable;
 
-public class Layer extends GameObject {
+import java.awt.*;
+
+public class Layer extends GameObject implements Movable, Renderable {
 
     private Sprite<? extends AnimationType> sprite;
     private float layerspeed;
@@ -50,6 +54,16 @@ public class Layer extends GameObject {
         public int getFrameCount(){
             return 1;
         }
+    }
+
+    @Override
+    public void update(float deltaTime){
+
+    }
+
+    @Override
+    public void render(Graphics2D g2d){
+
     }
 
     /*Caso a camada SEJA animada, eu vou desenvolver o enum de animação na própria classe GameScreen e só chamar no

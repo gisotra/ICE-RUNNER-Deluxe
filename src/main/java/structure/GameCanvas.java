@@ -2,9 +2,14 @@ package structure;
 
 import global.Universal;
 import inputs.KeyHandler;
+import inputs.MouseHandler;
+import sprites.ImageLoader;
+import sprites.Sprite;
+import system.AnimationType;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class GameCanvas extends Canvas {
     private GameEngine engine;
@@ -13,11 +18,18 @@ public class GameCanvas extends Canvas {
     private int currentUPS = 0;
     private int currentFPS = 0;
 
+    /*Mouse*/
+    private Point mousePoint;
+    private Cursor cursor;
+    private Sprite<CursorAnimation> spriteMouse;
+
     public GameCanvas(){
         setPreferredSize(new Dimension(Universal.GAME_WIDTH, Universal.GAME_HEIGHT));
         setFocusable(true);
         requestFocus();
-        addKeyListener(new KeyHandler(this, GameScreen.ObjectsOnScreen));
+        initMouseSprites();
+        addKeyListener(new KeyHandler(this, GameScreen.midLayerElements));
+        addMouseListener(new MouseHandler(this));
         this.screen = new GameScreen(this);
     }
 
@@ -37,16 +49,9 @@ public class GameCanvas extends Canvas {
 
         /*Desenho tudo na minha tela*/
         try{
-            /*RESPONSIVIDADE*/
-            int canvasW = getWidth();
-            int canvasH = getHeight();
-
-            double scaleX = canvasW / (double) Universal.GAME_HEIGHT;
-
             // Limpa o fundo para evitar artefatos de frames anteriores
             g2d.setColor(new Color(13, 30, 168));
             g2d.fillRect(0, 0, getWidth(), getHeight());
-
 
             g2d.setColor(Color.WHITE);
             g2d.setFont(new Font("Arial", Font.BOLD, 18));
@@ -57,7 +62,12 @@ public class GameCanvas extends Canvas {
             }*/
             drawPrototypeGround(g2d);
             drawGrid(g2d);
+
             screen.render(g2d);
+            mousePoint = getMousePosition();
+            if(mousePoint != null){
+                spriteMouse.render(g2d, (int) mousePoint.getX(), (int)mousePoint.getY());
+            }
         } finally {
             /*libero o conteúdo do meu pincel*/
             g2d.dispose();
@@ -111,5 +121,36 @@ public class GameCanvas extends Canvas {
     public void writeData(int updates, int frames){
         this.currentFPS = frames;
         this.currentUPS = updates;
+    }
+
+    //mudar o sprite do meu cursor
+    public void initMouseSprites(){
+
+        this.spriteMouse = new Sprite<>(ImageLoader.getImage("ui/cursor.png") , 32, 32, CursorAnimation.class, 1);
+
+        cursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "blank cursor");
+        setCursor(cursor);
+
+    }
+
+    public GameScreen getGameScreen(){
+        return this.screen;
+    }
+
+    /*========== Classe interna Para os Sprites ==========*/
+    public enum CursorAnimation implements AnimationType {
+
+        STATIC;
+
+        @Override
+        public int getIndex(){
+            return 0;
+        }
+
+        @Override
+        public int getFrameCount(){
+            return 1;
+        }
     }
 }

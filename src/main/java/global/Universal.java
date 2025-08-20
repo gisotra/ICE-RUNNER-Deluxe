@@ -21,7 +21,5 @@ public class Universal {
 
     /*Valor de velocidade base do jogo, que será aumentada conforme o jogo avança*/
     public static float BASESPEED = 0;
-
-
 }
 
