@@ -14,7 +14,6 @@ public abstract class GameObject {
     /*Controle de pooling*/
     protected boolean active = false;
 
-
     //-------------------------------------------------------
     /*Métodos abstratos*/
     public abstract void initSprite();

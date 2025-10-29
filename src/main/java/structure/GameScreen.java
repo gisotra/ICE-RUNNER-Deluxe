@@ -99,13 +99,13 @@ public class GameScreen {
                         snowEmitter.update(deltaTime);
                     }break;
                     case DESERT:{
-                        sandEmitter.update(deltaTime);
+                        //sandEmitter.update(deltaTime);
+                        //snowEmitter.update(deltaTime);
                     }break;
                     case VOLCANO:{
 
                     }break;
                 }
-
             }break;
         }
     }
@@ -131,10 +131,11 @@ public class GameScreen {
                 /*Emissores*/
                 switch(BiomeMachine.currentBiome){
                     case SNOW:{
-                        snowEmitter.render(g2d);
+                        //snowEmitter.render(g2d);
                     }break;
                     case DESERT:{
-                        sandEmitter.render(g2d);
+                        //sandEmitter.render(g2d);
+                        //snowEmitter.render(g2d);
                     }break;
                     case VOLCANO:{
 
@@ -159,8 +160,8 @@ public class GameScreen {
         midLayerElements.add(player1);
         player2 = new Player(2);
         midLayerElements.add(player2);
-        snowEmitter = new SnowEmitter(70);
-        sandEmitter = new SandEmitter(70);
+        snowEmitter = new SnowEmitter(100);
+        sandEmitter = new SandEmitter(100);
     }
 
     /*Desativar todo o conteúdo do arraylist (Para quando o player trocar de state, por exemplo)*/
