@@ -99,7 +99,7 @@ public class GameScreen {
                         snowEmitter.update(deltaTime);
                     }break;
                     case DESERT:{
-                        //sandEmitter.update(deltaTime);
+                        sandEmitter.update(deltaTime);
                         //snowEmitter.update(deltaTime);
                     }break;
                     case VOLCANO:{
@@ -134,7 +134,7 @@ public class GameScreen {
                         //snowEmitter.render(g2d);
                     }break;
                     case DESERT:{
-                        //sandEmitter.render(g2d);
+                        sandEmitter.render(g2d);
                         //snowEmitter.render(g2d);
                     }break;
                     case VOLCANO:{

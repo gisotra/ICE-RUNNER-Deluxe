@@ -1,8 +1,5 @@
 package system;
 
-import gameloop.screenstates.ui.GameButton;
-
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 

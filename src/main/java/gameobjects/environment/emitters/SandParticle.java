@@ -38,13 +38,22 @@ public class SandParticle extends GameObject implements Movable, Renderable {
 
     @Override
     public void initSprite(){
-        int randomParticle = r.nextInt(4) + 1;
+        /*int randomParticle = r.nextInt(4) + 1;
         int randomScale = r.nextInt(3) + 1;
 
         sandSprite = new Sprite(ImageLoader.getImage("particles/sand/sand"+ String.valueOf(randomParticle) +".png"),
                 ImageLoader.getImage("particles/sand/sand"+ String.valueOf(randomParticle) +".png").getHeight(),
                 ImageLoader.getImage("particles/sand/sand"+ String.valueOf(randomParticle) +".png").getWidth(),
                 SandAnimation.class,
+                1,
+                randomScale);*/
+        int randomParticle = r.nextInt(5) + 1;
+        int randomScale = r.nextInt(2) + 1;
+
+        sandSprite = new Sprite(ImageLoader.getImage("particles/snow/snowP"+ String.valueOf(randomParticle) +".png"),
+                ImageLoader.getImage("particles/snow/snowP"+ String.valueOf(randomParticle) +".png").getHeight(),
+                ImageLoader.getImage("particles/snow/snowP"+ String.valueOf(randomParticle) +".png").getWidth(),
+                SnowParticle.SnowAnimation.class,
                 1,
                 randomScale);
     }
