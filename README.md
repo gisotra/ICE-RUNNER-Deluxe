@@ -8,7 +8,7 @@ gráfico. Pretendo implementar a biblioteca JavaFX ou o framework LIBGDX.
  
 Para jogar, baixe o arquivo compactado contendo o executável e o lançador:
 
-[**CLIQUE AQUI PARA BAIXAR O JOGO (v1.0)**](https://github.com/gisotra/ICE-RUNNER.Versao.Faculdade/releases/download/ice-runner/ICE-RUNNER-Gisotra.zip)
+[**CLIQUE AQUI PARA BAIXAR O JOGO (v1.0)**](https://github.com/gisotra/ICE-RUNNER-Deluxe/releases/download/ice-deluxe/ice-deluxe-gisotra.zip)
 
 > **Nota:** Lembre-se de extrair o ZIP e rodar pelo arquivo `JOGAR.bat`.
 
